@@ -1,0 +1,27 @@
+/* 
+  Localizable.strings
+  MemoHero
+  
+  Japanese localization
+*/
+
+/* Standard Edit Menu Items */
+"Copy" = "コピー";
+"Paste" = "ペースト";
+"Cut" = "カット";
+"Select All" = "すべてを選択";
+"Delete" = "削除";
+"Undo" = "元に戻す";
+"Redo" = "やり直す";
+
+/* Common UI Elements */
+"Cancel" = "キャンセル";
+"Done" = "完了";
+"Save" = "保存";
+"Edit" = "編集";
+"Add" = "追加";
+"Remove" = "削除";
+
+/* SwiftUI List Actions */
+"Delete" = "削除";
+"Edit" = "編集";

@@ -1,0 +1,580 @@
+import SwiftUI
+
+// MARK: - Profile View
+
+/// プロフィール画面
+struct ProfileView: View {
+    @Environment(\.dismiss) private var dismiss
+    @StateObject private var profileManager = ProfileManager.shared
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                // 1. 基本プロフィール
+                BasicProfileSection(profile: $profileManager.profile)
+                
+                // 2. 挑戦・スキル
+                ChallengeSkillSection(profile: $profileManager.profile)
+                
+                // 3. キャラクター性（ヒーロー性）
+                CharacterSection(profile: $profileManager.profile)
+                
+                // 4. ビジョン・志向
+                VisionSection(profile: $profileManager.profile)
+                
+                // 5. 挑戦ログ
+                ChallengeLogSection(profile: $profileManager.profile)
+                
+                // 6. リソース
+                ResourceSection(profile: $profileManager.profile)
+            }
+            .navigationTitle("プロフィール")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("キャンセル") {
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("保存") {
+                        profileManager.saveProfile()
+                        dismiss()
+                    }
+                    .fontWeight(.semibold)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Basic Profile Section
+
+struct BasicProfileSection: View {
+    @Binding var profile: UserProfile
+    
+    var body: some View {
+        Section(header: Text("基本プロフィール")) {
+            HStack {
+                Text("年齢")
+                Spacer()
+                Picker("年齢を選択", selection: $profile.age) {
+                    Text("選択してください").tag(nil as Int?)
+                    ForEach(Array(1...99), id: \.self) { age in
+                        Text("\(age)歳").tag(age as Int?)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+            }
+            
+            HStack {
+                Text("学年")
+                Spacer()
+                Picker("学年を選択", selection: $profile.grade) {
+                    Text("選択してください").tag("")
+                    // 小学校
+                    Text("小学1年").tag("小学1年")
+                    Text("小学2年").tag("小学2年")
+                    Text("小学3年").tag("小学3年")
+                    Text("小学4年").tag("小学4年")
+                    Text("小学5年").tag("小学5年")
+                    Text("小学6年").tag("小学6年")
+                    // 中学校
+                    Text("中学1年").tag("中学1年")
+                    Text("中学2年").tag("中学2年")
+                    Text("中学3年").tag("中学3年")
+                    // 高校
+                    Text("高校1年").tag("高校1年")
+                    Text("高校2年").tag("高校2年")
+                    Text("高校3年").tag("高校3年")
+                    // 大学・専門学校
+                    Text("大学1年").tag("大学1年")
+                    Text("大学2年").tag("大学2年")
+                    Text("大学3年").tag("大学3年")
+                    Text("大学4年").tag("大学4年")
+                    Text("専門学校1年").tag("専門学校1年")
+                    Text("専門学校2年").tag("専門学校2年")
+                    Text("専門学校3年").tag("専門学校3年")
+                    // その他
+                    Text("社会人").tag("社会人")
+                    Text("その他").tag("その他")
+                }
+                .pickerStyle(MenuPickerStyle())
+            }
+            
+            HStack {
+                Text("居住地域")
+                Spacer()
+                Picker("居住地域を選択", selection: $profile.location) {
+                    Text("選択してください").tag("")
+                    Text("北海道").tag("北海道")
+                    Text("青森県").tag("青森県")
+                    Text("岩手県").tag("岩手県")
+                    Text("宮城県").tag("宮城県")
+                    Text("秋田県").tag("秋田県")
+                    Text("山形県").tag("山形県")
+                    Text("福島県").tag("福島県")
+                    Text("茨城県").tag("茨城県")
+                    Text("栃木県").tag("栃木県")
+                    Text("群馬県").tag("群馬県")
+                    Text("埼玉県").tag("埼玉県")
+                    Text("千葉県").tag("千葉県")
+                    Text("東京都").tag("東京都")
+                    Text("神奈川県").tag("神奈川県")
+                    Text("新潟県").tag("新潟県")
+                    Text("富山県").tag("富山県")
+                    Text("石川県").tag("石川県")
+                    Text("福井県").tag("福井県")
+                    Text("山梨県").tag("山梨県")
+                    Text("長野県").tag("長野県")
+                    Text("岐阜県").tag("岐阜県")
+                    Text("静岡県").tag("静岡県")
+                    Text("愛知県").tag("愛知県")
+                    Text("三重県").tag("三重県")
+                    Text("滋賀県").tag("滋賀県")
+                    Text("京都府").tag("京都府")
+                    Text("大阪府").tag("大阪府")
+                    Text("兵庫県").tag("兵庫県")
+                    Text("奈良県").tag("奈良県")
+                    Text("和歌山県").tag("和歌山県")
+                    Text("鳥取県").tag("鳥取県")
+                    Text("島根県").tag("島根県")
+                    Text("岡山県").tag("岡山県")
+                    Text("広島県").tag("広島県")
+                    Text("山口県").tag("山口県")
+                    Text("徳島県").tag("徳島県")
+                    Text("香川県").tag("香川県")
+                    Text("愛媛県").tag("愛媛県")
+                    Text("高知県").tag("高知県")
+                    Text("福岡県").tag("福岡県")
+                    Text("佐賀県").tag("佐賀県")
+                    Text("長崎県").tag("長崎県")
+                    Text("熊本県").tag("熊本県")
+                    Text("大分県").tag("大分県")
+                    Text("宮崎県").tag("宮崎県")
+                    Text("鹿児島県").tag("鹿児島県")
+                    Text("沖縄県").tag("沖縄県")
+                    Text("海外").tag("海外")
+                }
+                .pickerStyle(MenuPickerStyle())
+            }
+            
+            
+            HStack {
+                Text("部活動")
+                TextField("例: 科学部", text: $profile.club)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("興味・関心分野")
+                InterestInputView(interests: $profile.interests)
+            }
+        }
+    }
+}
+
+// MARK: - Challenge & Skill Section
+
+struct ChallengeSkillSection: View {
+    @Binding var profile: UserProfile
+    
+    var body: some View {
+        Section(header: Text("挑戦・スキル")) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("これまでの挑戦経験")
+                TagInputView(tags: $profile.challengeExperiences, placeholder: "挑戦経験を追加")
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("得意なスキル")
+                TagInputView(tags: $profile.strongSkills, placeholder: "得意スキルを追加")
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("挑戦したいスキル")
+                TagInputView(tags: $profile.improvementSkills, placeholder: "挑戦したいスキルを追加")
+            }
+        }
+    }
+}
+
+// MARK: - Character Section
+
+struct CharacterSection: View {
+    @Binding var profile: UserProfile
+    
+    var body: some View {
+        Section(header: Text("キャラクター性")) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("ヒーロータイプ")
+                Picker("ヒーロータイプ", selection: $profile.heroType) {
+                    Text("選択してください").tag(nil as HeroType?)
+                    ForEach(HeroType.allCases) { type in
+                        Text(type.displayName).tag(type as HeroType?)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+            }
+            
+            VStack(alignment: .leading, spacing: 12) {
+                Text("性格特性")
+                
+                VStack(alignment: .leading, spacing: 12) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("外向的 ←→ 内向的")
+                            .font(.caption)
+                        Picker("外向的・内向的", selection: $profile.personalityTraits.isExtroverted) {
+                            Text("選択してください").tag(nil as Bool?)
+                            Text("外向的").tag(true as Bool?)
+                            Text("内向的").tag(false as Bool?)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("リスクを取る ←→ 安全志向")
+                            .font(.caption)
+                        Picker("リスク・安全", selection: $profile.personalityTraits.isRiskTaker) {
+                            Text("選択してください").tag(nil as Bool?)
+                            Text("リスクを取る").tag(true as Bool?)
+                            Text("安全志向").tag(false as Bool?)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("細部重視 ←→ 全体重視")
+                            .font(.caption)
+                        Picker("細部・全体", selection: $profile.personalityTraits.isDetailOriented) {
+                            Text("選択してください").tag(nil as Bool?)
+                            Text("細部重視").tag(true as Bool?)
+                            Text("全体重視").tag(false as Bool?)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
+                }
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("モチベーション源")
+                MultiSelectView(
+                    options: MotivationSource.allCases,
+                    selections: $profile.motivationSources,
+                    displayName: { $0.displayName }
+                )
+            }
+        }
+    }
+}
+
+// MARK: - Vision Section
+
+struct VisionSection: View {
+    @Binding var profile: UserProfile
+    
+    var body: some View {
+        Section(header: Text("ビジョン・志向")) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("将来やりたいこと")
+                TextField("例: 起業してAIで社会問題を解決したい", text: $profile.futureGoals, axis: .vertical)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .lineLimit(3...5)
+            }
+            
+            HStack {
+                Text("尊敬する人・ロールモデル")
+                TextField("例: スティーブ・ジョブズ", text: $profile.roleModel)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("解決したい課題")
+                TextField("例: 地域の環境問題を解決したい", text: $profile.problemsToSolve, axis: .vertical)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .lineLimit(3...5)
+            }
+        }
+    }
+}
+
+// MARK: - Challenge Log Section
+
+struct ChallengeLogSection: View {
+    @Binding var profile: UserProfile
+    
+    var body: some View {
+        Section(header: Text("挑戦ログ")) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("現在取り組んでいる挑戦")
+                TagInputView(tags: $profile.currentChallenges, placeholder: "現在の挑戦を追加")
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("最近の成長")
+                TagInputView(tags: $profile.recentGrowth, placeholder: "最近の成長を追加")
+            }
+        }
+    }
+}
+
+// MARK: - Resource Section
+
+struct ResourceSection: View {
+    @Binding var profile: UserProfile
+    
+    var body: some View {
+        Section(header: Text("リソース")) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("利用可能機器・環境")
+                TagInputView(tags: $profile.equipment, placeholder: "PC、スマホなどを追加")
+            }
+            
+            HStack {
+                Text("協力してくれる大人")
+                TextField("例: 両親、先生、メンター", text: $profile.supportingAdults)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            
+            VStack(alignment: .leading, spacing: 8) {
+                Text("所属コミュニティ")
+                TagInputView(tags: $profile.communities, placeholder: "コミュニティを追加")
+            }
+        }
+    }
+}
+
+// MARK: - Helper Views
+
+/// 興味関心入力ビュー（プリセットボタン付き）
+struct InterestInputView: View {
+    @Binding var interests: [String]
+    @State private var interestText = ""
+    
+    private let presetOptions = [
+        "防災", "AI・テクノロジー", "環境", "スポーツ", "音楽",
+        "アート・デザイン", "起業", "プログラミング", "国際交流", "ボランティア",
+        "科学・研究", "料理", "旅行", "写真", "読書"
+    ]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            // テキストフィールド
+            TextField("例: 音楽, プログラミング, 環境", text: $interestText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .onAppear {
+                    // 初期化時に既存の興味関心を文字列として設定
+                    interestText = interests.joined(separator: ", ")
+                }
+                .onChange(of: interestText) {
+                    // テキストが変更されたら配列に反映
+                    let trimmedItems = interestText.split(separator: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                    interests = trimmedItems.filter { !$0.isEmpty }
+                }
+            
+            // プリセットボタン
+            Text("選択肢:")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], spacing: 8) {
+                ForEach(presetOptions, id: \.self) { preset in
+                    Button(preset) {
+                        addPreset(preset)
+                    }
+                    .font(.caption)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(isPresetSelected(preset) ? Color.blue.opacity(0.3) : Color.gray.opacity(0.2))
+                    .foregroundColor(isPresetSelected(preset) ? .blue : .primary)
+                    .cornerRadius(8)
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+            .padding(.top, 4)
+        }
+    }
+    
+    private func addPreset(_ preset: String) {
+        if !isPresetSelected(preset) {
+            if !interestText.isEmpty {
+                interestText += ", \(preset)"
+            } else {
+                interestText = preset
+            }
+        }
+    }
+    
+    private func isPresetSelected(_ preset: String) -> Bool {
+        return interestText.contains(preset)
+    }
+}
+
+/// タグ入力ビュー（プリセットボタン付き）
+struct TagInputView: View {
+    @Binding var tags: [String]
+    let placeholder: String
+    let presetOptions: [String]?
+    @State private var newTag = ""
+    
+    // プリセットオプションなしの初期化
+    init(tags: Binding<[String]>, placeholder: String) {
+        self._tags = tags
+        self.placeholder = placeholder
+        self.presetOptions = nil
+    }
+    
+    // プリセットオプションありの初期化
+    init(tags: Binding<[String]>, placeholder: String, presetOptions: [String]) {
+        self._tags = tags
+        self.placeholder = placeholder
+        self.presetOptions = presetOptions
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            // 既存タグの表示
+            if !tags.isEmpty {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 8) {
+                    ForEach(Array(tags.enumerated()), id: \.offset) { index, tag in
+                        HStack {
+                            Text(tag)
+                                .font(.caption)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color.blue.opacity(0.2))
+                                .cornerRadius(12)
+                            
+                            Button(action: {
+                                tags.remove(at: index)
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // 新しいタグの入力
+            HStack {
+                TextField(placeholder, text: $newTag)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .onSubmit {
+                        addTag()
+                    }
+                
+                Button("追加") {
+                    addTag()
+                }
+                .disabled(newTag.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            }
+            
+            // プリセットボタンの表示
+            if let presets = presetOptions {
+                Text("選択肢:")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], spacing: 8) {
+                    ForEach(presets, id: \.self) { preset in
+                        Button(preset) {
+                            addPresetTag(preset)
+                        }
+                        .font(.caption)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(tags.contains(preset) ? Color.blue.opacity(0.3) : Color.gray.opacity(0.2))
+                        .foregroundColor(tags.contains(preset) ? .blue : .primary)
+                        .cornerRadius(8)
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+                .padding(.top, 4)
+            }
+        }
+    }
+    
+    private func addTag() {
+        let trimmed = newTag.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmed.isEmpty && !tags.contains(trimmed) {
+            tags.append(trimmed)
+            newTag = ""
+        }
+    }
+    
+    private func addPresetTag(_ preset: String) {
+        // テキストフィールドに直接テキストを追加
+        if !newTag.isEmpty {
+            newTag += ", \(preset)"
+        } else {
+            newTag = preset
+        }
+    }
+}
+
+/// 2択トグル（true/false/nil）- 左右切り替え可能
+struct TriStateToggle: View {
+    @Binding var value: Bool?
+    let trueLabel: String
+    let falseLabel: String
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            Button(trueLabel) {
+                // 既に選択済みなら解除、そうでなければ選択
+                value = (value == true) ? nil : true
+            }
+            .foregroundColor(value == true ? .white : .primary)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(value == true ? Color.blue : Color.gray.opacity(0.2))
+            .cornerRadius(16)
+            
+            Button(falseLabel) {
+                // 既に選択済みなら解除、そうでなければ選択
+                value = (value == false) ? nil : false
+            }
+            .foregroundColor(value == false ? .white : .primary)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(value == false ? Color.blue : Color.gray.opacity(0.2))
+            .cornerRadius(16)
+        }
+    }
+}
+
+/// 複数選択ビュー
+struct MultiSelectView<T: Identifiable & Hashable>: View {
+    let options: [T]
+    @Binding var selections: [T]
+    let displayName: (T) -> String
+    
+    var body: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], spacing: 8) {
+            ForEach(options, id: \.id) { option in
+                Button(action: {
+                    if selections.contains(option) {
+                        selections.removeAll { $0.id == option.id }
+                    } else {
+                        selections.append(option)
+                    }
+                }) {
+                    Text(displayName(option))
+                        .font(.caption)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .foregroundColor(selections.contains(option) ? .white : .primary)
+                        .background(selections.contains(option) ? Color.blue : Color.gray.opacity(0.2))
+                        .cornerRadius(12)
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+        }
+    }
+}
+
+// MARK: - Preview
+
+#Preview {
+    ProfileView()
+}

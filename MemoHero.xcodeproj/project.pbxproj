@@ -1,0 +1,688 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7017B41987624709A3D1E8FF /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017B41987624709A3D1E8FE /* ProfileModel.swift */; };
+		7017B41987624709A3D1E900 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017B41987624709A3D1E8FD /* AppDelegate.swift */; };
+		7017B41987624709A3D1E901 /* PushNotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017B41987624709A3D1E8FC /* PushNotificationSettingsView.swift */; };
+		7A123456789012AA1 /* WidgetMemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012AA0 /* WidgetMemo.swift */; };
+		7A123456789012AB2 /* iCloudBackupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012AB0 /* iCloudBackupManager.swift */; };
+		7A123456789012AB3 /* iCloudBackupViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012AB1 /* iCloudBackupViews.swift */; };
+		7A123456789012AC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012A3 /* ContentView.swift */; };
+		7A123456789012AD /* MemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012A4 /* MemoApp.swift */; };
+		7A123456789012AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A123456789012A5 /* Assets.xcassets */; };
+		7A123456789012AF /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012C1 /* Memo.swift */; };
+		7A123456789012B0 /* MemoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012C2 /* MemoStore.swift */; };
+		7A123456789012B2 /* MemoEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012C4 /* MemoEditorView.swift */; };
+		7A123456789012BB1 /* WidgetMemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012AA0 /* WidgetMemo.swift */; };
+		7A123456789012C6 /* MemoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012C3 /* MemoListView.swift */; };
+		7A123456789012D1 /* HighlightableTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012D0 /* HighlightableTextEditor.swift */; };
+		7A123456789012E1 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012E0 /* Folder.swift */; };
+		7A123456789012F1 /* FolderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012F0 /* FolderStore.swift */; };
+		7A123456789012G1 /* MarkdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012G0 /* MarkdownRenderer.swift */; };
+		7A123456789012H1 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012H0 /* ShareSheet.swift */; };
+		7A123456789012I1 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012I0 /* NotificationManager.swift */; };
+		7A123456789012J1 /* WidgetDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012J0 /* WidgetDataManager.swift */; };
+		7A123456789012M1 /* MemoWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A123456789012M0 /* MemoWidget.swift */; };
+		7A123456789012O1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A123456789012O0 /* WidgetKit.framework */; };
+		7A123456789012P1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A123456789012P0 /* SwiftUI.framework */; };
+		7A123456789012Q1 /* MemoWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7A123456789012Q0 /* MemoWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B921A3EB94704014BA339801 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B921A3EB94704014BA339800 /* ProfileView.swift */; };
+		EB4FD8B62E590AD100E879D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB4FD8B52E590AD100E879D1 /* GoogleService-Info.plist */; };
+		EB4FD8B72E590AD100E879D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB4FD8B52E590AD100E879D1 /* GoogleService-Info.plist */; };
+		EB4FD8BA2E590B3C00E879D1 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EB4FD8B92E590B3C00E879D1 /* FirebaseAnalytics */; };
+		EB4FD8BC2E590B3C00E879D1 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = EB4FD8BB2E590B3C00E879D1 /* FirebaseAnalyticsCore */; };
+		EB4FD8BE2E590B3C00E879D1 /* FirebaseAnalyticsIdentitySupport in Frameworks */ = {isa = PBXBuildFile; productRef = EB4FD8BD2E590B3C00E879D1 /* FirebaseAnalyticsIdentitySupport */; };
+		EB4FD8C02E590B3C00E879D1 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = EB4FD8BF2E590B3C00E879D1 /* FirebaseCore */; };
+		EB4FD8C22E590B3C00E879D1 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = EB4FD8C12E590B3C00E879D1 /* FirebaseDatabase */; };
+		EB4FD8C42E590B3C00E879D1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB4FD8C32E590B3C00E879D1 /* FirebaseFirestore */; };
+		EB4FD8C62E590B3C00E879D1 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = EB4FD8C52E590B3C00E879D1 /* FirebaseFunctions */; };
+		EB4FD8C82E590B3C00E879D1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = EB4FD8C72E590B3C00E879D1 /* FirebaseMessaging */; };
+		EB4FD8CC2E5918A600E879D1 /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4FD8C92E5918A600E879D1 /* EventListView.swift */; };
+		EB4FD8CD2E5918A600E879D1 /* FirebaseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4FD8CA2E5918A600E879D1 /* FirebaseModels.swift */; };
+		EB4FD8CE2E5918A600E879D1 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4FD8CB2E5918A600E879D1 /* FirebaseService.swift */; };
+		EBA131E72E5E5FAC00DCD9DB /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = EBA131E62E5E5FAC00DCD9DB /* FirebaseMessaging */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7A123456789012V0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7A123456789012B3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7A123456789012U0;
+			remoteInfo = MemoWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7A123456789012U1 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				7A123456789012Q1 /* MemoWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		7017B41987624709A3D1E8FE /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		7017B41987624709A3D1E8FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7017B41987624709A3D1E8FC /* PushNotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSettingsView.swift; sourceTree = "<group>"; };
+		7A123456789012A0 /* MemoHero.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoHero.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A123456789012A3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7A123456789012A4 /* MemoHero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoHero.swift; sourceTree = "<group>"; };
+		7A123456789012A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7A123456789012A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A123456789012AA0 /* WidgetMemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetMemo.swift; sourceTree = "<group>"; };
+		7A123456789012AB0 /* iCloudBackupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudBackupManager.swift; sourceTree = "<group>"; };
+		7A123456789012AB1 /* iCloudBackupViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudBackupViews.swift; sourceTree = "<group>"; };
+		7A123456789012C1 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
+		7A123456789012C2 /* MemoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoStore.swift; sourceTree = "<group>"; };
+		7A123456789012C3 /* MemoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListView.swift; sourceTree = "<group>"; };
+		7A123456789012C4 /* MemoEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoEditorView.swift; sourceTree = "<group>"; };
+		7A123456789012D0 /* HighlightableTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightableTextEditor.swift; sourceTree = "<group>"; };
+		7A123456789012E0 /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
+		7A123456789012F0 /* FolderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStore.swift; sourceTree = "<group>"; };
+		7A123456789012G0 /* MarkdownRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownRenderer.swift; sourceTree = "<group>"; };
+		7A123456789012H0 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		7A123456789012I0 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		7A123456789012J0 /* WidgetDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetDataManager.swift; sourceTree = "<group>"; };
+		7A123456789012M0 /* MemoWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoWidget.swift; sourceTree = "<group>"; };
+		7A123456789012N0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A123456789012O0 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		7A123456789012P0 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		7A123456789012Q0 /* MemoWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MemoWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A123456789012Y0 /* MemoHero.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MemoHero.entitlements; sourceTree = "<group>"; };
+		7A123456789012Z0 /* MemoWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MemoWidgetExtension.entitlements; sourceTree = "<group>"; };
+		B921A3EB94704014BA339800 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		EB4FD8B52E590AD100E879D1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EB4FD8C92E5918A600E879D1 /* EventListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
+		EB4FD8CA2E5918A600E879D1 /* FirebaseModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseModels.swift; sourceTree = "<group>"; };
+		EB4FD8CB2E5918A600E879D1 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7A12345678901299 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBA131E72E5E5FAC00DCD9DB /* FirebaseMessaging in Frameworks */,
+				EB4FD8C82E590B3C00E879D1 /* FirebaseMessaging in Frameworks */,
+				EB4FD8C22E590B3C00E879D1 /* FirebaseDatabase in Frameworks */,
+				EB4FD8C62E590B3C00E879D1 /* FirebaseFunctions in Frameworks */,
+				EB4FD8BA2E590B3C00E879D1 /* FirebaseAnalytics in Frameworks */,
+				EB4FD8BC2E590B3C00E879D1 /* FirebaseAnalyticsCore in Frameworks */,
+				EB4FD8C02E590B3C00E879D1 /* FirebaseCore in Frameworks */,
+				EB4FD8BE2E590B3C00E879D1 /* FirebaseAnalyticsIdentitySupport in Frameworks */,
+				EB4FD8C42E590B3C00E879D1 /* FirebaseFirestore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A123456789012R1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A123456789012P1 /* SwiftUI.framework in Frameworks */,
+				7A123456789012O1 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7A123456789012A7 = {
+			isa = PBXGroup;
+			children = (
+				7A123456789012A8 /* MemoApp */,
+				7A123456789012S0 /* MemoWidget */,
+				7A123456789012C5 /* Products */,
+				7A123456789012T0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7A123456789012A8 /* MemoHero */ = {
+			isa = PBXGroup;
+			children = (
+				7017B41987624709A3D1E8FD /* AppDelegate.swift */,
+				7017B41987624709A3D1E8FC /* PushNotificationSettingsView.swift */,
+				EB4FD8C92E5918A600E879D1 /* EventListView.swift */,
+				EB4FD8CA2E5918A600E879D1 /* FirebaseModels.swift */,
+				EB4FD8CB2E5918A600E879D1 /* FirebaseService.swift */,
+				7017B41987624709A3D1E8FE /* ProfileModel.swift */,
+				B921A3EB94704014BA339800 /* ProfileView.swift */,
+				EB4FD8B52E590AD100E879D1 /* GoogleService-Info.plist */,
+				7A123456789012A4 /* MemoHero.swift */,
+				7A123456789012A3 /* ContentView.swift */,
+				7A123456789012C1 /* Memo.swift */,
+				7A123456789012C2 /* MemoStore.swift */,
+				7A123456789012E0 /* Folder.swift */,
+				7A123456789012F0 /* FolderStore.swift */,
+				7A123456789012C3 /* MemoListView.swift */,
+				7A123456789012C4 /* MemoEditorView.swift */,
+				7A123456789012D0 /* HighlightableTextEditor.swift */,
+				7A123456789012G0 /* MarkdownRenderer.swift */,
+				7A123456789012H0 /* ShareSheet.swift */,
+				7A123456789012I0 /* NotificationManager.swift */,
+				7A123456789012J0 /* WidgetDataManager.swift */,
+				7A123456789012AB0 /* iCloudBackupManager.swift */,
+				7A123456789012AB1 /* iCloudBackupViews.swift */,
+				7A123456789012A5 /* Assets.xcassets */,
+				7A123456789012A6 /* Info.plist */,
+				7A123456789012Y0 /* MemoHero.entitlements */,
+			);
+			path = MemoHero;
+			sourceTree = "<group>";
+		};
+		7A123456789012C5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7A123456789012A0 /* MemoHero.app */,
+				7A123456789012Q0 /* MemoWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7A123456789012S0 /* MemoWidget */ = {
+			isa = PBXGroup;
+			children = (
+				7A123456789012M0 /* MemoWidget.swift */,
+				7A123456789012AA0 /* WidgetMemo.swift */,
+				7A123456789012N0 /* Info.plist */,
+				7A123456789012Z0 /* MemoWidgetExtension.entitlements */,
+			);
+			path = MemoWidget;
+			sourceTree = "<group>";
+		};
+		7A123456789012T0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7A123456789012O0 /* WidgetKit.framework */,
+				7A123456789012P0 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7A12345678901298 /* MemoHero */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A123456789012C9 /* Build configuration list for PBXNativeTarget "MemoHero" */;
+			buildPhases = (
+				7A123456789012C7 /* Sources */,
+				7A12345678901299 /* Frameworks */,
+				7A123456789012C8 /* Resources */,
+				7A123456789012U1 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7A123456789012V1 /* PBXTargetDependency */,
+			);
+			name = MemoHero;
+			productName = MemoHero;
+			productReference = 7A123456789012A0 /* MemoHero.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7A123456789012U0 /* MemoWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A123456789012W1 /* Build configuration list for PBXNativeTarget "MemoWidgetExtension" */;
+			buildPhases = (
+				7A123456789012R0 /* Sources */,
+				7A123456789012R1 /* Frameworks */,
+				7A123456789012R2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MemoWidgetExtension;
+			productName = MemoWidgetExtension;
+			productReference = 7A123456789012Q0 /* MemoWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7A123456789012B3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					7A12345678901298 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 7A123456789012B4 /* Build configuration list for PBXProject "MemoHero" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7A123456789012A7;
+			packageReferences = (
+				EB4FD8B82E590B3C00E879D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			productRefGroup = 7A123456789012C5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7A12345678901298 /* MemoHero */,
+				7A123456789012U0 /* MemoWidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7A123456789012C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A123456789012AE /* Assets.xcassets in Resources */,
+				EB4FD8B72E590AD100E879D1 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A123456789012R2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB4FD8B62E590AD100E879D1 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7A123456789012C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7017B41987624709A3D1E900 /* AppDelegate.swift in Sources */,
+				7017B41987624709A3D1E901 /* PushNotificationSettingsView.swift in Sources */,
+				7A123456789012AD /* MemoHero.swift in Sources */,
+				EB4FD8CC2E5918A600E879D1 /* EventListView.swift in Sources */,
+				EB4FD8CD2E5918A600E879D1 /* FirebaseModels.swift in Sources */,
+				EB4FD8CE2E5918A600E879D1 /* FirebaseService.swift in Sources */,
+				7017B41987624709A3D1E8FF /* ProfileModel.swift in Sources */,
+				B921A3EB94704014BA339801 /* ProfileView.swift in Sources */,
+				7A123456789012AC /* ContentView.swift in Sources */,
+				7A123456789012AF /* Memo.swift in Sources */,
+				7A123456789012B0 /* MemoStore.swift in Sources */,
+				7A123456789012E1 /* Folder.swift in Sources */,
+				7A123456789012F1 /* FolderStore.swift in Sources */,
+				7A123456789012C6 /* MemoListView.swift in Sources */,
+				7A123456789012B2 /* MemoEditorView.swift in Sources */,
+				7A123456789012D1 /* HighlightableTextEditor.swift in Sources */,
+				7A123456789012G1 /* MarkdownRenderer.swift in Sources */,
+				7A123456789012H1 /* ShareSheet.swift in Sources */,
+				7A123456789012I1 /* NotificationManager.swift in Sources */,
+				7A123456789012J1 /* WidgetDataManager.swift in Sources */,
+				7A123456789012AB2 /* iCloudBackupManager.swift in Sources */,
+				7A123456789012AB3 /* iCloudBackupViews.swift in Sources */,
+				7A123456789012BB1 /* WidgetMemo.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A123456789012R0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A123456789012M1 /* MemoWidget.swift in Sources */,
+				7A123456789012AA1 /* WidgetMemo.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7A123456789012V1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7A123456789012U0 /* MemoWidgetExtension */;
+			targetProxy = 7A123456789012V0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		7A123456789012B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = L3W6A7KKTN;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7A123456789012B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = L3W6A7KKTN;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7A123456789012B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MemoHero/MemoHero.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 250826;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "メモヒーロー";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = memohero.edfusion.jp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7A123456789012B8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MemoHero/MemoHero.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 250826;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "メモヒーロー";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = memohero.edfusion.jp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7A123456789012X1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MemoWidget/MemoWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 250826;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MemoWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "メモウィジェット";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = memohero.edfusion.jp.MemoWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7A123456789012X2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MemoWidget/MemoWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 250826;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MemoWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "メモウィジェット";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = memohero.edfusion.jp.MemoWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7A123456789012B4 /* Build configuration list for PBXProject "MemoHero" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A123456789012B5 /* Debug */,
+				7A123456789012B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A123456789012C9 /* Build configuration list for PBXNativeTarget "MemoHero" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A123456789012B7 /* Debug */,
+				7A123456789012B8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A123456789012W1 /* Build configuration list for PBXNativeTarget "MemoWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A123456789012X1 /* Debug */,
+				7A123456789012X2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EB4FD8B82E590B3C00E879D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EB4FD8B92E590B3C00E879D1 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB4FD8B82E590B3C00E879D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		EB4FD8BB2E590B3C00E879D1 /* FirebaseAnalyticsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB4FD8B82E590B3C00E879D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsCore;
+		};
+		EB4FD8BD2E590B3C00E879D1 /* FirebaseAnalyticsIdentitySupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB4FD8B82E590B3C00E879D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsIdentitySupport;
+		};
+		EB4FD8BF2E590B3C00E879D1 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB4FD8B82E590B3C00E879D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		EB4FD8C12E590B3C00E879D1 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB4FD8B82E590B3C00E879D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		EB4FD8C32E590B3C00E879D1 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB4FD8B82E590B3C00E879D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		EB4FD8C52E590B3C00E879D1 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB4FD8B82E590B3C00E879D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+		EB4FD8C72E590B3C00E879D1 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB4FD8B82E590B3C00E879D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		EBA131E62E5E5FAC00DCD9DB /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB4FD8B82E590B3C00E879D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 7A123456789012B3 /* Project object */;
+}
