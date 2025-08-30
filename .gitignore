@@ -4,6 +4,8 @@
 
 .DS_Store
 
+DerivedData/
+
 ## User settings
 xcuserdata/
 
