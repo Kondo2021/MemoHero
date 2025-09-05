@@ -183,17 +183,17 @@ struct ChallengeSkillSection: View {
         Section(header: Text("挑戦・スキル")) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("これまでの挑戦経験")
-                TagInputView(tags: $profile.challengeExperiences, placeholder: "挑戦経験を追加")
+                SimpleListInputView(items: $profile.challengeExperiences, placeholder: "挑戦経験を入力（カンマ区切り可）")
             }
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("得意なスキル")
-                TagInputView(tags: $profile.strongSkills, placeholder: "得意スキルを追加")
+                SimpleListInputView(items: $profile.strongSkills, placeholder: "得意スキルを入力（カンマ区切り可）")
             }
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("挑戦したいスキル")
-                TagInputView(tags: $profile.improvementSkills, placeholder: "挑戦したいスキルを追加")
+                SimpleListInputView(items: $profile.improvementSkills, placeholder: "挑戦したいスキルを入力（カンマ区切り可）")
             }
         }
     }
@@ -307,12 +307,12 @@ struct ChallengeLogSection: View {
         Section(header: Text("挑戦ログ")) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("現在取り組んでいる挑戦")
-                TagInputView(tags: $profile.currentChallenges, placeholder: "現在の挑戦を追加")
+                SimpleListInputView(items: $profile.currentChallenges, placeholder: "現在の挑戦を入力（カンマ区切り可）")
             }
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("最近の成長")
-                TagInputView(tags: $profile.recentGrowth, placeholder: "最近の成長を追加")
+                SimpleListInputView(items: $profile.recentGrowth, placeholder: "最近の成長を入力（カンマ区切り可）")
             }
         }
     }
@@ -327,7 +327,7 @@ struct ResourceSection: View {
         Section(header: Text("リソース")) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("利用可能機器・環境")
-                TagInputView(tags: $profile.equipment, placeholder: "PC、スマホなどを追加")
+                SimpleListInputView(items: $profile.equipment, placeholder: "PC、スマホなどを入力（カンマ区切り可）")
             }
             
             HStack {
@@ -338,7 +338,7 @@ struct ResourceSection: View {
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("所属コミュニティ")
-                TagInputView(tags: $profile.communities, placeholder: "コミュニティを追加")
+                SimpleListInputView(items: $profile.communities, placeholder: "コミュニティを入力（カンマ区切り可）")
             }
         }
     }
@@ -409,105 +409,55 @@ struct InterestInputView: View {
     }
 }
 
-/// タグ入力ビュー（プリセットボタン付き）
-struct TagInputView: View {
-    @Binding var tags: [String]
+/// シンプルなリスト入力ビュー
+struct SimpleListInputView: View {
+    @Binding var items: [String]
     let placeholder: String
-    let presetOptions: [String]?
-    @State private var newTag = ""
-    
-    // プリセットオプションなしの初期化
-    init(tags: Binding<[String]>, placeholder: String) {
-        self._tags = tags
-        self.placeholder = placeholder
-        self.presetOptions = nil
-    }
-    
-    // プリセットオプションありの初期化
-    init(tags: Binding<[String]>, placeholder: String, presetOptions: [String]) {
-        self._tags = tags
-        self.placeholder = placeholder
-        self.presetOptions = presetOptions
-    }
+    @State private var newItem = ""
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            // 既存タグの表示
-            if !tags.isEmpty {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 8) {
-                    ForEach(Array(tags.enumerated()), id: \.offset) { index, tag in
-                        HStack {
-                            Text(tag)
-                                .font(.caption)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(Color.blue.opacity(0.2))
-                                .cornerRadius(12)
-                            
-                            Button(action: {
-                                tags.remove(at: index)
-                            }) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
-                            }
-                        }
+            // 既存アイテムのリスト表示
+            ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+                HStack {
+                    Text("• \(item)")
+                    Spacer()
+                    Button("削除") {
+                        items.remove(at: index)
                     }
+                    .foregroundColor(.red)
+                    .font(.caption)
                 }
             }
             
-            // 新しいタグの入力
+            // 新しいアイテムの入力
             HStack {
-                TextField(placeholder, text: $newTag)
+                TextField(placeholder, text: $newItem)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .onSubmit {
-                        addTag()
+                        addItem()
                     }
                 
                 Button("追加") {
-                    addTag()
+                    addItem()
                 }
-                .disabled(newTag.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .disabled(newItem.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
+        }
+    }
+    
+    private func addItem() {
+        let trimmed = newItem.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmed.isEmpty {
+            // カンマ区切りで複数の項目を分割
+            let newItems = trimmed.split(separator: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             
-            // プリセットボタンの表示
-            if let presets = presetOptions {
-                Text("選択肢:")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], spacing: 8) {
-                    ForEach(presets, id: \.self) { preset in
-                        Button(preset) {
-                            addPresetTag(preset)
-                        }
-                        .font(.caption)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(tags.contains(preset) ? Color.blue.opacity(0.3) : Color.gray.opacity(0.2))
-                        .foregroundColor(tags.contains(preset) ? .blue : .primary)
-                        .cornerRadius(8)
-                        .buttonStyle(PlainButtonStyle())
-                    }
+            for item in newItems {
+                if !item.isEmpty && !items.contains(item) {
+                    items.append(item)
                 }
-                .padding(.top, 4)
             }
-        }
-    }
-    
-    private func addTag() {
-        let trimmed = newTag.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !trimmed.isEmpty && !tags.contains(trimmed) {
-            tags.append(trimmed)
-            newTag = ""
-        }
-    }
-    
-    private func addPresetTag(_ preset: String) {
-        // テキストフィールドに直接テキストを追加
-        if !newTag.isEmpty {
-            newTag += ", \(preset)"
-        } else {
-            newTag = preset
+            newItem = ""
         }
     }
 }

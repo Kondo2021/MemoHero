@@ -1,7 +1,138 @@
 import WidgetKit
 import SwiftUI
 import Foundation
+import AppIntents
+import UIKit
 
+// MARK: - Widget Intents
+
+/// チェックボックスの状態を切り替えるIntent
+@available(iOS 17.0, *)
+struct ToggleCheckboxIntent: AppIntent {
+    static var title: LocalizedStringResource = "Toggle Checkbox"
+    static var description = IntentDescription("Toggle checkbox state in memo")
+    
+    @Parameter(title: "Memo ID")
+    var memoId: String
+    
+    @Parameter(title: "Line Index")
+    var lineIndex: Int
+    
+    @Parameter(title: "Is Checked")
+    var isChecked: Bool
+    
+    init() {}
+    
+    init(memoId: String, lineIndex: Int, isChecked: Bool) {
+        self.memoId = memoId
+        self.lineIndex = lineIndex
+        self.isChecked = isChecked
+    }
+    
+    func perform() async throws -> some IntentResult {
+        print("🔄 ウィジェット: チェックボックストグル - メモID: \(memoId), 行: \(lineIndex), 現在の状態: \(isChecked)")
+        
+        // チェック状態を反転してメモを更新
+        await toggleCheckboxInMemo(memoId: memoId, lineIndex: lineIndex, currentState: isChecked)
+        
+        // ウィジェットをリフレッシュ
+        WidgetCenter.shared.reloadAllTimelines()
+        
+        return .result()
+    }
+}
+
+/// メモを開くIntent
+@available(iOS 17.0, *)
+struct OpenMemoIntent: AppIntent {
+    static var title: LocalizedStringResource = "Open Memo"
+    static var description = IntentDescription("Open memo in the main app")
+    static var openAppWhenRun: Bool = true
+    
+    @Parameter(title: "Memo ID")
+    var memoId: String
+    
+    init() {}
+    
+    init(memoId: String) {
+        self.memoId = memoId
+    }
+    
+    func perform() async throws -> some IntentResult {
+        print("📱 ウィジェット: メモを開く - ID: \(memoId)")
+        
+        // UserDefaultsに開くべきメモIDを保存
+        if let sharedDefaults = UserDefaults(suiteName: "group.memohero.edfusion.jp") {
+            sharedDefaults.set(memoId, forKey: "widget_open_memo_id")
+            print("✅ ウィジェット: 開くメモIDを保存しました")
+        }
+        
+        return .result()
+    }
+}
+
+// MARK: - Intent Helper Functions
+
+/// チェックボックスの状態を切り替える
+@available(iOS 17.0, *)
+private func toggleCheckboxInMemo(memoId: String, lineIndex: Int, currentState: Bool) async {
+    print("🔧 ウィジェット: チェックボックス状態変更処理開始")
+    
+    guard let sharedDefaults = UserDefaults(suiteName: "group.memohero.edfusion.jp") else {
+        print("❌ ウィジェット: App Groups UserDefaultsにアクセスできません")
+        return
+    }
+    
+    // 全メモを取得
+    guard let data = sharedDefaults.data(forKey: "all_memos"),
+          var memos = try? JSONDecoder().decode([WidgetMemo].self, from: data) else {
+        print("❌ ウィジェット: メモデータの取得に失敗")
+        return
+    }
+    
+    // 対象メモを検索
+    guard let memoIndex = memos.firstIndex(where: { $0.id.uuidString == memoId }) else {
+        print("❌ ウィジェット: 対象メモが見つかりません")
+        return
+    }
+    
+    var memo = memos[memoIndex]
+    var lines = memo.content.components(separatedBy: .newlines)
+    
+    // 対象行のチェック状態を変更
+    if lineIndex < lines.count {
+        let line = lines[lineIndex]
+        let newLine: String
+        
+        if currentState {
+            // チェック済み → 未チェック
+            newLine = line.replacingOccurrences(of: "- [x] ", with: "- [ ] ")
+                         .replacingOccurrences(of: "- [X] ", with: "- [ ] ")
+        } else {
+            // 未チェック → チェック済み
+            newLine = line.replacingOccurrences(of: "- [ ] ", with: "- [x] ")
+        }
+        
+        lines[lineIndex] = newLine
+        memo.content = lines.joined(separator: "\n")
+        memo.updatedAt = Date()
+        
+        // メモを更新
+        memos[memoIndex] = memo
+        
+        // データを保存
+        if let updatedData = try? JSONEncoder().encode(memos) {
+            sharedDefaults.set(updatedData, forKey: "all_memos")
+            print("✅ ウィジェット: チェックボックス状態を更新しました")
+        } else {
+            print("❌ ウィジェット: データの保存に失敗")
+        }
+    } else {
+        print("❌ ウィジェット: 行インデックスが範囲外です")
+    }
+}
+
+// ウィジェット拡張では UIApplication.shared は使用不可のため削除
 
 // MARK: - Timeline Providers
 struct MemoProvider: TimelineProvider {
@@ -152,25 +283,26 @@ struct SmallMemoView: View {
     let entry: MemoEntry
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 4) {
             // メモ内容プレビュー（メイン表示）
-            WidgetMarkdownView(content: entry.memo.content, fontSize: 11, lineLimit: 10, memoId: entry.memo.id)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            WidgetMarkdownView(content: entry.memo.content, fontSize: 11, lineLimit: 7, memoId: entry.memo.id)
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+            
+            Spacer(minLength: 4)
             
             // 更新日時（下部に固定）
             HStack {
                 Spacer()
                 Text(formatDate(entry.memo.updatedAt))
                     .font(.system(size: 8))
-                    .foregroundColor(.secondary.opacity(0.5))
+                    .foregroundColor(.secondary.opacity(0.6))
+                    .lineLimit(1)
                 Spacer()
             }
-            .padding(.top, 8)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .padding(.top, 8)
-        .padding(.horizontal, 4)
-        .padding(.bottom, 4)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.vertical, 12)
+        .padding(.horizontal, 10)
         .background(Color(UIColor.systemBackground))
         .cornerRadius(8)
     }
@@ -181,10 +313,12 @@ struct MediumMemoView: View {
     let entry: MemoEntry
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 8) {
             // メモ内容プレビュー（メイン表示）
-            WidgetMarkdownView(content: entry.memo.content, fontSize: 13, lineLimit: 7, memoId: entry.memo.id)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            WidgetMarkdownView(content: entry.memo.content, fontSize: 13, lineLimit: 5, memoId: entry.memo.id)
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+            
+            Spacer()
             
             // 更新日時（下部に固定）
             HStack {
@@ -194,12 +328,9 @@ struct MediumMemoView: View {
                     .foregroundColor(.secondary.opacity(0.5))
                 Spacer()
             }
-            .padding(.top, 8)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .padding(.top, 12)
-        .padding(.horizontal, 8)
-        .padding(.bottom, 8)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(18)
         .background(Color(UIColor.systemBackground))
         .cornerRadius(8)
     }
@@ -212,7 +343,7 @@ struct LargeMemoView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             // メモ内容プレビュー（メイン表示）
-            WidgetMarkdownView(content: entry.memo.content, fontSize: 15, lineLimit: 19, memoId: entry.memo.id)
+            WidgetMarkdownView(content: entry.memo.content, fontSize: 15, lineLimit: 20, memoId: entry.memo.id)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             
             // 更新日時（下部に固定）
@@ -226,7 +357,9 @@ struct LargeMemoView: View {
             .padding(.top, 12)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .padding(10)
+        .padding(.top, 24)
+        .padding(.horizontal, 20)
+        .padding(.bottom, 24)
         .background(Color(UIColor.systemBackground))
         .cornerRadius(12)
     }
@@ -507,22 +640,48 @@ struct WidgetMarkdownView: View {
                 }
             ))
         }
-        // チェックリスト処理（プレビューと同じスタイリング）
+        // チェックリスト処理（ウィジェット上でタップ可能）
         else if trimmedLine.hasPrefix("- [x] ") || trimmedLine.hasPrefix("- [X] ") {
             let content = String(trimmedLine.dropFirst(6))
             return WidgetMarkdownElement(view: AnyView(
-                Link(destination: URL(string: "memoapp://open/\(memoId.uuidString)")!) {
-                    HStack(alignment: .top, spacing: 6) {
-                        // チェック済みアイコン
-                        ZStack {
-                            Circle()
-                                .fill(Color.green)
-                                .frame(width: 14, height: 14)
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.white)
-                                .font(.system(size: 8, weight: .bold))
+                HStack(alignment: .top, spacing: 6) {
+                    // チェック済みアイコン（タップ可能）
+                    if #available(iOS 17.0, *) {
+                        Button(intent: ToggleCheckboxIntent(memoId: memoId.uuidString, lineIndex: lineIndex, isChecked: true)) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.green)
+                                    .frame(width: 14, height: 14)
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 8, weight: .bold))
+                            }
+                            .frame(minWidth: 14, alignment: .center)
                         }
-                        .frame(minWidth: 14, alignment: .center)
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        // テキスト部分（メモを開く）
+                        Button(intent: OpenMemoIntent(memoId: memoId.uuidString)) {
+                            formatInlineMarkdownForWidget(content)
+                                .font(.system(size: fontSize))
+                                .foregroundColor(.secondary)
+                                .strikethrough(true)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    } else {
+                        // iOS 16以下では従来のLink使用
+                        Link(destination: URL(string: "memoapp://open/\(memoId.uuidString)")!) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.green)
+                                    .frame(width: 14, height: 14)
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 8, weight: .bold))
+                            }
+                            .frame(minWidth: 14, alignment: .center)
+                        }
                         
                         formatInlineMarkdownForWidget(content)
                             .font(.system(size: fontSize))
@@ -530,29 +689,49 @@ struct WidgetMarkdownView: View {
                             .strikethrough(true)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .padding(.leading, totalIndent)
-                    .padding(.vertical, 1)
                 }
+                .padding(.leading, totalIndent)
+                .padding(.vertical, 1)
             ))
         } else if trimmedLine.hasPrefix("- [ ] ") {
             let content = String(trimmedLine.dropFirst(6))
             return WidgetMarkdownElement(view: AnyView(
-                Link(destination: URL(string: "memoapp://open/\(memoId.uuidString)")!) {
-                    HStack(alignment: .top, spacing: 6) {
-                        // 未チェックアイコン
-                        Circle()
-                            .stroke(Color.secondary, lineWidth: 1)
-                            .frame(width: 14, height: 14)
-                            .frame(minWidth: 14, alignment: .center)
+                HStack(alignment: .top, spacing: 6) {
+                    // 未チェックアイコン（タップ可能）
+                    if #available(iOS 17.0, *) {
+                        Button(intent: ToggleCheckboxIntent(memoId: memoId.uuidString, lineIndex: lineIndex, isChecked: false)) {
+                            Circle()
+                                .stroke(Color.secondary, lineWidth: 1)
+                                .frame(width: 14, height: 14)
+                                .frame(minWidth: 14, alignment: .center)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        // テキスト部分（メモを開く）
+                        Button(intent: OpenMemoIntent(memoId: memoId.uuidString)) {
+                            formatInlineMarkdownForWidget(content)
+                                .font(.system(size: fontSize))
+                                .foregroundColor(.primary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    } else {
+                        // iOS 16以下では従来のLink使用
+                        Link(destination: URL(string: "memoapp://open/\(memoId.uuidString)")!) {
+                            Circle()
+                                .stroke(Color.secondary, lineWidth: 1)
+                                .frame(width: 14, height: 14)
+                                .frame(minWidth: 14, alignment: .center)
+                        }
                         
                         formatInlineMarkdownForWidget(content)
                             .font(.system(size: fontSize))
                             .foregroundColor(.primary)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .padding(.leading, totalIndent)
-                    .padding(.vertical, 1)
                 }
+                .padding(.leading, totalIndent)
+                .padding(.vertical, 1)
             ))
         }
         // 通常のリスト処理（プレビューと同じスタイリング）
