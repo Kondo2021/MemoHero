@@ -206,7 +206,7 @@ private func createPlaceholderMemo() -> WidgetMemo {
     return WidgetMemo(
         id: UUID(),
         title: "ウィジェット設定中",
-        content: "メモアプリを開いてメモを作成してください。\n作成されたメモが自動的にここに表示されます。",
+        content: "メモアプリを開いてメモを作成してください。\n作成されたメモがここに表示されます。",
         createdAt: Date(),
         updatedAt: Date(),
         dueDate: nil
@@ -403,8 +403,8 @@ struct AutoMemoWidget: Widget {
             Color(UIColor.systemBackground)
         }
         }
-        .configurationDisplayName("メモウィジェット（最新自動表示）")
-        .description("最新のメモを自動的にホーム画面に表示します。")
+        .configurationDisplayName("メモウィジェット（最新メモ表示）")
+        .description("最新のメモをホーム画面に表示します。")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge])
     }
 }
@@ -1310,7 +1310,7 @@ struct MemoWidgetBundle: WidgetBundle {
     MemoEntry(date: .now, memo: WidgetMemo(
         id: UUID(),
         title: "中サイズメモ",
-        content: "このウィジェットは最新のメモを自動的に表示します。中サイズでより多くの情報を表示できます。",
+        content: "このウィジェットは最新のメモを表示します。中サイズでより多くの情報を表示できます。",
         createdAt: Date(),
         updatedAt: Date(),
         dueDate: nil

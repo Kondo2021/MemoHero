@@ -197,7 +197,7 @@ class WidgetDataManager {
             
             print("✅ WidgetDataManager: 全メモ(\(widgetMemos.count)件)をウィジェット用に保存しました")
             
-            // 最新メモを自動的にウィジェット用にも設定
+            // 最新メモをウィジェット用にも設定
             if let latestMemo = widgetMemos.max(by: { $0.updatedAt < $1.updatedAt }) {
                 do {
                     let latestData = try JSONEncoder().encode(latestMemo)

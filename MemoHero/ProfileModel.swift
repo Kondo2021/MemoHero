@@ -96,9 +96,9 @@ struct UserProfile: Codable {
     var interests: [String] = [] // タグ形式
     
     // 2. 挑戦・スキル
-    var challengeExperiences: [String] = []
-    var strongSkills: [String] = []
-    var improvementSkills: [String] = []
+    var challengeExperiences: String = ""
+    var strongSkills: String = ""
+    var improvementSkills: String = ""
     
     // 3. キャラクター性（ヒーロー性）
     var heroType: HeroType?
@@ -111,16 +111,25 @@ struct UserProfile: Codable {
     var problemsToSolve: String = ""
     
     // 5. 挑戦ログ
-    var currentChallenges: [String] = []
-    var recentGrowth: [String] = []
+    var currentChallenges: String = ""
+    var recentGrowth: String = ""
     var challengeHistory: [ChallengeLogEntry] = []
     
     // 6. リソース
-    var equipment: [String] = [] // PC、スマホ、ネット環境等
+    var equipment: String = "" // PC、スマホ、ネット環境等
     var supportingAdults: String = ""
-    var communities: [String] = []
+    var communities: String = ""
     
     init() {}
+    
+    /// ディープコピーを作成
+    func copy() -> UserProfile {
+        if let data = try? JSONEncoder().encode(self),
+           let copy = try? JSONDecoder().decode(UserProfile.self, from: data) {
+            return copy
+        }
+        return UserProfile()
+    }
 }
 
 // MARK: - Profile Manager
@@ -175,13 +184,13 @@ class ProfileManager: ObservableObject {
         // 挑戦・スキル
         var skillInfo: [String] = []
         if !profile.challengeExperiences.isEmpty {
-            skillInfo.append("挑戦経験: \(profile.challengeExperiences.joined(separator: ", "))")
+            skillInfo.append("挑戦経験: \(profile.challengeExperiences)")
         }
         if !profile.strongSkills.isEmpty {
-            skillInfo.append("得意スキル: \(profile.strongSkills.joined(separator: ", "))")
+            skillInfo.append("得意スキル: \(profile.strongSkills)")
         }
         if !profile.improvementSkills.isEmpty {
-            skillInfo.append("挑戦したいスキル: \(profile.improvementSkills.joined(separator: ", "))")
+            skillInfo.append("挑戦したいスキル: \(profile.improvementSkills)")
         }
         
         if !skillInfo.isEmpty {
@@ -231,10 +240,10 @@ class ProfileManager: ObservableObject {
         // 現在の挑戦
         var currentInfo: [String] = []
         if !profile.currentChallenges.isEmpty {
-            currentInfo.append("現在の挑戦: \(profile.currentChallenges.joined(separator: ", "))")
+            currentInfo.append("現在の挑戦: \(profile.currentChallenges)")
         }
         if !profile.recentGrowth.isEmpty {
-            currentInfo.append("最近の成長: \(profile.recentGrowth.joined(separator: ", "))")
+            currentInfo.append("最近の成長: \(profile.recentGrowth)")
         }
         
         if !currentInfo.isEmpty {
@@ -243,9 +252,9 @@ class ProfileManager: ObservableObject {
         
         // リソース
         var resourceInfo: [String] = []
-        if !profile.equipment.isEmpty { resourceInfo.append("利用可能機器: \(profile.equipment.joined(separator: ", "))") }
+        if !profile.equipment.isEmpty { resourceInfo.append("利用可能機器: \(profile.equipment)") }
         if !profile.supportingAdults.isEmpty { resourceInfo.append("サポート: \(profile.supportingAdults)") }
-        if !profile.communities.isEmpty { resourceInfo.append("所属コミュニティ: \(profile.communities.joined(separator: ", "))") }
+        if !profile.communities.isEmpty { resourceInfo.append("所属コミュニティ: \(profile.communities)") }
         
         if !resourceInfo.isEmpty {
             sections.append("**リソース**\n\(resourceInfo.joined(separator: "\n"))")

@@ -6,6 +6,7 @@ import SwiftUI
 struct ProfileView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var profileManager = ProfileManager.shared
+    @State private var originalProfile: UserProfile = UserProfile()
     
     var body: some View {
         NavigationView {
@@ -33,6 +34,8 @@ struct ProfileView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("キャンセル") {
+                        // 元のプロフィールに戻す
+                        profileManager.profile = originalProfile
                         dismiss()
                     }
                 }
@@ -44,6 +47,10 @@ struct ProfileView: View {
                     .fontWeight(.semibold)
                 }
             }
+        }
+        .onAppear {
+            // 編集開始時に現在のプロフィールをディープコピーでバックアップ
+            originalProfile = profileManager.profile.copy()
         }
     }
 }
@@ -58,7 +65,7 @@ struct BasicProfileSection: View {
             HStack {
                 Text("年齢")
                 Spacer()
-                Picker("年齢を選択", selection: $profile.age) {
+                Picker("を選択", selection: $profile.age) {
                     Text("選択してください").tag(nil as Int?)
                     ForEach(Array(1...99), id: \.self) { age in
                         Text("\(age)歳").tag(age as Int?)
@@ -70,7 +77,7 @@ struct BasicProfileSection: View {
             HStack {
                 Text("学年")
                 Spacer()
-                Picker("学年を選択", selection: $profile.grade) {
+                Picker("を選択", selection: $profile.grade) {
                     Text("選択してください").tag("")
                     // 小学校
                     Text("小学1年").tag("小学1年")
@@ -105,7 +112,7 @@ struct BasicProfileSection: View {
             HStack {
                 Text("居住地域")
                 Spacer()
-                Picker("居住地域を選択", selection: $profile.location) {
+                Picker("を選択", selection: $profile.location) {
                     Text("選択してください").tag("")
                     Text("北海道").tag("北海道")
                     Text("青森県").tag("青森県")
@@ -183,17 +190,23 @@ struct ChallengeSkillSection: View {
         Section(header: Text("挑戦・スキル")) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("これまでの挑戦経験")
-                SimpleListInputView(items: $profile.challengeExperiences, placeholder: "挑戦経験を入力（カンマ区切り可）")
+                TextField("例: プログラミング、部活動での大会出場", text: $profile.challengeExperiences, axis: .vertical)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .lineLimit(3...5)
             }
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("得意なスキル")
-                SimpleListInputView(items: $profile.strongSkills, placeholder: "得意スキルを入力（カンマ区切り可）")
+                TextField("例: 数学、英語、プレゼンテーション", text: $profile.strongSkills, axis: .vertical)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .lineLimit(3...5)
             }
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("挑戦したいスキル")
-                SimpleListInputView(items: $profile.improvementSkills, placeholder: "挑戦したいスキルを入力（カンマ区切り可）")
+                TextField("例: AI・機械学習、デザイン、起業", text: $profile.improvementSkills, axis: .vertical)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .lineLimit(3...5)
             }
         }
     }
@@ -258,11 +271,7 @@ struct CharacterSection: View {
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("モチベーション源")
-                MultiSelectView(
-                    options: MotivationSource.allCases,
-                    selections: $profile.motivationSources,
-                    displayName: { $0.displayName }
-                )
+                MotivationInputView(motivations: $profile.motivationSources)
             }
         }
     }
@@ -282,10 +291,11 @@ struct VisionSection: View {
                     .lineLimit(3...5)
             }
             
-            HStack {
+            VStack(alignment: .leading, spacing: 8) {
                 Text("尊敬する人・ロールモデル")
-                TextField("例: スティーブ・ジョブズ", text: $profile.roleModel)
+                TextField("例: スティーブ・ジョブズ、その理由や影響を受けた点も含めて", text: $profile.roleModel, axis: .vertical)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .lineLimit(3...5)
             }
             
             VStack(alignment: .leading, spacing: 8) {
@@ -307,12 +317,16 @@ struct ChallengeLogSection: View {
         Section(header: Text("挑戦ログ")) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("現在取り組んでいる挑戦")
-                SimpleListInputView(items: $profile.currentChallenges, placeholder: "現在の挑戦を入力（カンマ区切り可）")
+                TextField("例: 英検2級合格を目指している、新しいプログラミング言語の習得", text: $profile.currentChallenges, axis: .vertical)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .lineLimit(3...5)
             }
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("最近の成長")
-                SimpleListInputView(items: $profile.recentGrowth, placeholder: "最近の成長を入力（カンマ区切り可）")
+                TextField("例: チームでのコミュニケーションが上達した、新しい技術を習得できた", text: $profile.recentGrowth, axis: .vertical)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .lineLimit(3...5)
             }
         }
     }
@@ -327,18 +341,23 @@ struct ResourceSection: View {
         Section(header: Text("リソース")) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("利用可能機器・環境")
-                SimpleListInputView(items: $profile.equipment, placeholder: "PC、スマホなどを入力（カンマ区切り可）")
+                TextField("例: PC、スマホ、高速インターネット、静かな勉強スペース", text: $profile.equipment, axis: .vertical)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .lineLimit(3...5)
             }
             
-            HStack {
+            VStack(alignment: .leading, spacing: 8) {
                 Text("協力してくれる大人")
-                TextField("例: 両親、先生、メンター", text: $profile.supportingAdults)
+                TextField("例: 両親、先生、メンター、先輩", text: $profile.supportingAdults, axis: .vertical)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .lineLimit(3...5)
             }
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("所属コミュニティ")
-                SimpleListInputView(items: $profile.communities, placeholder: "コミュニティを入力（カンマ区切り可）")
+                TextField("例: プログラミングサークル、ボランティア団体、学習グループ", text: $profile.communities, axis: .vertical)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .lineLimit(3...5)
             }
         }
     }
@@ -360,8 +379,9 @@ struct InterestInputView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             // テキストフィールド
-            TextField("例: 音楽, プログラミング, 環境", text: $interestText)
+            TextField("例: 音楽, プログラミング, 環境", text: $interestText, axis: .vertical)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .lineLimit(3...5)
                 .onAppear {
                     // 初期化時に既存の興味関心を文字列として設定
                     interestText = interests.joined(separator: ", ")
@@ -406,6 +426,79 @@ struct InterestInputView: View {
     
     private func isPresetSelected(_ preset: String) -> Bool {
         return interestText.contains(preset)
+    }
+}
+
+/// モチベーション入力ビュー（プリセットボタン付き）
+struct MotivationInputView: View {
+    @Binding var motivations: [MotivationSource]
+    @State private var motivationText = ""
+    
+    private let presetOptions = MotivationSource.allCases
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            // テキストフィールド
+            TextField("例: 仲間からの評価, 社会貢献, スキル向上", text: $motivationText, axis: .vertical)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .lineLimit(3...5)
+                .onAppear {
+                    // 初期化時に既存のモチベーション源を文字列として設定
+                    motivationText = motivations.map { $0.displayName }.joined(separator: ", ")
+                }
+                .onChange(of: motivationText) {
+                    // テキストが変更されたらMotivationSource配列に反映
+                    let trimmedItems = motivationText.split(separator: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                    motivations = []
+                    for item in trimmedItems.filter({ !$0.isEmpty }) {
+                        if let matchedSource = MotivationSource.allCases.first(where: { $0.displayName == item }) {
+                            motivations.append(matchedSource)
+                        } else {
+                            // カスタムの場合は新しいケースが必要だが、enumなので既存のもののみ対応
+                            // 部分一致で探す
+                            if let partialMatch = MotivationSource.allCases.first(where: { $0.displayName.contains(item) || item.contains($0.displayName) }) {
+                                if !motivations.contains(partialMatch) {
+                                    motivations.append(partialMatch)
+                                }
+                            }
+                        }
+                    }
+                }
+            
+            // プリセットボタン
+            Text("選択肢:")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 8) {
+                ForEach(presetOptions, id: \.id) { preset in
+                    Button(preset.displayName) {
+                        addPreset(preset)
+                    }
+                    .font(.caption)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(isPresetSelected(preset) ? Color.blue.opacity(0.3) : Color.gray.opacity(0.2))
+                    .foregroundColor(isPresetSelected(preset) ? .blue : .primary)
+                    .cornerRadius(8)
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+            .padding(.top, 4)
+        }
+    }
+    
+    private func addPreset(_ preset: MotivationSource) {
+        if !isPresetSelected(preset) {
+            if !motivationText.isEmpty {
+                motivationText += ", \(preset.displayName)"
+            } else {
+                motivationText = preset.displayName
+            }
+        }
+    }
+    
+    private func isPresetSelected(_ preset: MotivationSource) -> Bool {
+        return motivationText.contains(preset.displayName)
     }
 }
 
