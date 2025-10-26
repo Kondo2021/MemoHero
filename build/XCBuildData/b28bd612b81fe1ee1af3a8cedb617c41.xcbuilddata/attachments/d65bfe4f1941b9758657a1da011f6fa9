@@ -1,0 +1,4 @@
+module GoogleAppMeasurementCoreTarget {
+umbrella "/Users/kondokenji/Library/Developer/Xcode/DerivedData/MemoHero-hgimondtuhxeuihgzxbgmvzxiapl/SourcePackages/checkouts/GoogleAppMeasurement/GoogleAppMeasurementCoreWrapper/include"
+export *
+}

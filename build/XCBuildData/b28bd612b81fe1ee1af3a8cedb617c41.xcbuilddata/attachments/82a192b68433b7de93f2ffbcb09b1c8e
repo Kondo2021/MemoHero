@@ -1,0 +1,4 @@
+module FirebaseAnalyticsCoreTarget {
+umbrella "/Users/kondokenji/Library/Developer/Xcode/DerivedData/MemoHero-hgimondtuhxeuihgzxbgmvzxiapl/SourcePackages/checkouts/firebase-ios-sdk/SwiftPM-PlatformExclude/FirebaseAnalyticsCoreWrap/include"
+export *
+}

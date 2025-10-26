@@ -1,0 +1,4 @@
+module GoogleUtilities_Logger {
+umbrella "/Users/kondokenji/Library/Developer/Xcode/DerivedData/MemoHero-hgimondtuhxeuihgzxbgmvzxiapl/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Logger/Public"
+export *
+}

@@ -1,0 +1,4 @@
+module third_party_IsAppEncrypted {
+umbrella "/Users/kondokenji/Library/Developer/Xcode/DerivedData/MemoHero-hgimondtuhxeuihgzxbgmvzxiapl/SourcePackages/checkouts/GoogleUtilities/third_party/IsAppEncrypted/Public"
+export *
+}

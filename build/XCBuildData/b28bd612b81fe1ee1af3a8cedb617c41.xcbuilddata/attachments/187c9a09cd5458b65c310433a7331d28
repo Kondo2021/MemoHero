@@ -1,0 +1,29 @@
+{
+  "" : {
+    "diagnostics" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidgetExtension-primary.dia",
+    "emit-module-dependencies" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidgetExtension-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidgetExtension-primary-emit-module.dia",
+    "pch" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidgetExtension-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidgetExtension-primary.swiftdeps"
+  },
+  "/Users/kondokenji/GitRepo/MemoHero/MemoWidget/MemoWidget.swift" : {
+    "const-values" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidget.swiftconstvalues",
+    "dependencies" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidget.d",
+    "diagnostics" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidget.dia",
+    "index-unit-output-path" : "/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidget.o",
+    "llvm-bc" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidget.bc",
+    "object" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidget.o",
+    "swift-dependencies" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidget.swiftdeps",
+    "swiftmodule" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/MemoWidget~partial.swiftmodule"
+  },
+  "/Users/kondokenji/GitRepo/MemoHero/MemoWidget/WidgetMemo.swift" : {
+    "const-values" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/WidgetMemo.swiftconstvalues",
+    "dependencies" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/WidgetMemo.d",
+    "diagnostics" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/WidgetMemo.dia",
+    "index-unit-output-path" : "/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/WidgetMemo.o",
+    "llvm-bc" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/WidgetMemo.bc",
+    "object" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/WidgetMemo.o",
+    "swift-dependencies" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/WidgetMemo.swiftdeps",
+    "swiftmodule" : "/Users/kondokenji/GitRepo/MemoHero/build/MemoHero.build/Debug-iphoneos/MemoWidgetExtension.build/Objects-normal/arm64/WidgetMemo~partial.swiftmodule"
+  }
+}

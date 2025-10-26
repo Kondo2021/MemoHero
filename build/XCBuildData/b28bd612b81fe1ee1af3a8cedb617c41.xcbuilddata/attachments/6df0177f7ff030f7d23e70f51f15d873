@@ -1,0 +1,4 @@
+module leveldb {
+umbrella "/Users/kondokenji/Library/Developer/Xcode/DerivedData/MemoHero-hgimondtuhxeuihgzxbgmvzxiapl/SourcePackages/checkouts/leveldb/include"
+export *
+}

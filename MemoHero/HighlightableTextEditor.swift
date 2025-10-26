@@ -275,23 +275,21 @@ struct HighlightableTextEditor: UIViewRepresentable {
             print("   テキスト長: \(textView.text.count)")
             print("   markedTextRange: \(textView.markedTextRange != nil)")
             
+            // カーソル位置を保存
+            let currentRange = textView.selectedRange
+            print("   カーソル位置: \(currentRange.location)")
+            
             // 日本語入力中（marked text）の場合は最小限の処理のみ
             if textView.markedTextRange != nil {
                 print("   日本語入力中のため最小限処理")
-                // テキスト変更を親に通知のみ
                 parent.text = textView.text
                 return
             }
             
-            // カーソル位置とスクロール位置を保存
-            let currentRange = textView.selectedRange
-            let currentContentOffset = textView.contentOffset
-            print("   カーソル位置: \(currentRange.location)")
-            
             // テキスト変更を親に通知
             parent.text = textView.text
             
-            // カーソル位置を即座に復元（非同期前に）
+            // カーソル位置を復元
             textView.selectedRange = currentRange
             parent.selectedRange = currentRange
             
@@ -299,15 +297,6 @@ struct HighlightableTextEditor: UIViewRepresentable {
             print("   onTextChange呼び出し開始")
             parent.onTextChange(textView.text)
             print("   onTextChange呼び出し完了")
-            
-            // 念のため非同期でも復元
-            DispatchQueue.main.async {
-                if textView.selectedRange != currentRange {
-                    textView.selectedRange = currentRange
-                }
-                // スクロール位置も復元（より確実に）
-                textView.contentOffset = currentContentOffset
-            }
             
             print("✅ HighlightableTextEditor.textViewDidChange() 完了")
         }
@@ -328,6 +317,120 @@ struct HighlightableTextEditor: UIViewRepresentable {
 /// 日本語入力とスクロール制御を改善したカスタムUITextView
 /// 検索結果ハイライト時の不正なスクロールを防ぐための特別な制御を含む
 class CustomTextView: UITextView {
+    // MARK: - Keyboard Properties
+    /// キーボードが表示されているかどうか
+    var isKeyboardVisible = false
+    /// キーボードの高さ
+    private var keyboardHeight: CGFloat = 0
+    
+    // MARK: - Initialization
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+        setupKeyboardNotifications()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupKeyboardNotifications()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    /// キーボード通知の設定
+    private func setupKeyboardNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(_:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(_:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    /// キーボード表示時の処理
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        
+        isKeyboardVisible = true
+        keyboardHeight = keyboardFrame.height
+        
+        // 下部に余白を追加してキーボード分のスペースを確保
+        var contentInset = self.contentInset
+        contentInset.bottom = keyboardHeight
+        self.contentInset = contentInset
+        
+        // スクロールインジケータの位置も調整
+        var scrollInset = self.verticalScrollIndicatorInsets
+        scrollInset.bottom = keyboardHeight
+        self.verticalScrollIndicatorInsets = scrollInset
+        
+        // アニメーション情報を取得してスムーズに調整
+        if let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
+           let curve = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt {
+            UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(rawValue: curve), animations: {
+                self.layoutIfNeeded()
+            })
+        }
+    }
+    
+    /// キーボード非表示時の処理
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        isKeyboardVisible = false
+        keyboardHeight = 0
+        
+        // contentInsetをリセット
+        var contentInset = self.contentInset
+        contentInset.bottom = 0
+        self.contentInset = contentInset
+        
+        // スクロールインジケータの位置もリセット
+        var scrollInset = self.verticalScrollIndicatorInsets
+        scrollInset.bottom = 0
+        self.verticalScrollIndicatorInsets = scrollInset
+        
+        // アニメーション情報を取得してスムーズに調整
+        if let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
+           let curve = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt {
+            UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(rawValue: curve), animations: {
+                self.layoutIfNeeded()
+            })
+        }
+    }
+    
+    /// カーソル位置が見えるようにスクロール調整（強制版）
+    func scrollToCursorIfNeeded() {
+        ensureCursorIsVisible(animated: true)
+    }
+    
+    /// カーソルが確実に表示領域に入るようにスクロール調整（シンプル版）
+    func ensureCursorIsVisible(animated: Bool = true) {
+        guard selectedRange.length == 0 else { return }
+        
+        // contentInsetにより下部に余白があるため、
+        // 基本的なスクロール機能を使用してカーソルを可視化
+        guard let cursorPosition = position(from: beginningOfDocument, offset: selectedRange.location) else { return }
+        let cursorRect = caretRect(for: cursorPosition)
+        
+        // UITextViewの標準的なスクロール機能を使用
+        scrollRectToVisible(cursorRect, animated: animated)
+    }
+    
+    /// ファーストレスポンダーになった時の処理
+    @discardableResult
+    override func becomeFirstResponder() -> Bool {
+        let result = super.becomeFirstResponder()
+        // contentInsetで余白があるため、特別な調整は不要
+        return result
+    }
+    
     // MARK: - Context Menu Methods
     /// コンテキストメニューのアクション可否を判定
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -399,33 +502,24 @@ class CustomTextView: UITextView {
     }
     
     // MARK: - Scroll Control Methods
-    /// 自動スクロールの制御
-    /// 検索以外での不要なスクロールを防止
+    /// 自動スクロールの制御（シンプル版）
     override func scrollRectToVisible(_ rect: CGRect, animated: Bool) {
-        // 日本語入力中（marked text）の場合は通常のスクロールを許可
-        if markedTextRange != nil {
-            super.scrollRectToVisible(rect, animated: animated)
-            return
-        }
-        
-        // 検索以外の自動スクロールを抑制
-        // 通常の編集時はスクロール位置を維持
-        return
+        // contentInsetで余白を確保しているため、標準的なスクロール動作を許可
+        super.scrollRectToVisible(rect, animated: animated)
     }
     
-    /// 選択範囲変更時のカーソル可視化制御
+    /// 選択範囲変更時のカーソル可視化制御（シンプル版）
     override var selectedRange: NSRange {
         didSet {
-            // 日本語入力中の場合は自動スクロールを許可
+            // 日本語入力中の場合は何もしない
             if markedTextRange != nil {
                 return
             }
             
-            // カーソル位置変更時の自動スクロールを最小限に
+            // contentInsetで余白があるため、基本的なカーソル可視化のみ
             if selectedRange.length == 0 {
-                let cursorRect = caretRect(for: position(from: beginningOfDocument, offset: selectedRange.location) ?? beginningOfDocument)
-                if !bounds.contains(cursorRect) {
-                    super.scrollRectToVisible(cursorRect, animated: false)
+                DispatchQueue.main.async {
+                    self.ensureCursorIsVisible(animated: false)
                 }
             }
         }

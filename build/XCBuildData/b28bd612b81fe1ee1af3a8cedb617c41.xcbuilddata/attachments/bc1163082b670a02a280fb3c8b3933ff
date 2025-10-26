@@ -1,0 +1,4 @@
+module FirebaseAnalyticsIdentitySupportTarget {
+umbrella "/Users/kondokenji/Library/Developer/Xcode/DerivedData/MemoHero-hgimondtuhxeuihgzxbgmvzxiapl/SourcePackages/checkouts/firebase-ios-sdk/FirebaseAnalyticsIdentitySupportWrapper/include"
+export *
+}

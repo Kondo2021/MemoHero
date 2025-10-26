@@ -1,0 +1,4 @@
+module nanopb {
+umbrella "/Users/kondokenji/Library/Developer/Xcode/DerivedData/MemoHero-hgimondtuhxeuihgzxbgmvzxiapl/SourcePackages/checkouts/nanopb/spm_headers"
+export *
+}

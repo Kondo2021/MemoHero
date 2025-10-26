@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>application-identifier</key>
+	<string>L3W6A7KKTN.memohero.edfusion.jp.MemoWidgetExtension</string>
+	<key>com.apple.developer.icloud-container-identifiers</key>
+	<array>
+		<string>iCloud.memohero.edfusion.jp.MemoWidgetExtension</string>
+	</array>
+	<key>com.apple.developer.icloud-services</key>
+	<array>
+		<string>CloudKit</string>
+	</array>
+	<key>com.apple.developer.team-identifier</key>
+	<string>L3W6A7KKTN</string>
+	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
+	<string>L3W6A7KKTN.memohero.edfusion.jp.MemoWidgetExtension</string>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.memohero.edfusion.jp</string>
+	</array>
+	<key>get-task-allow</key>
+	<true/>
+</dict>
+</plist>

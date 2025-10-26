@@ -2589,7 +2589,7 @@ struct NotificationHistoryView: View {
         
         // 期日通知の判定
         let title = fcmNotification.title
-        let body = fcmNotification.body
+        let _ = fcmNotification.body
         let isDeadlineNotification = title.contains("期日になりました") || title.contains("期日が近づいています")
         
         if isDeadlineNotification {

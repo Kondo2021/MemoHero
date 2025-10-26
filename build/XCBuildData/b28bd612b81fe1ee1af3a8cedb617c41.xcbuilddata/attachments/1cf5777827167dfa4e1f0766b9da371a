@@ -1,0 +1,4 @@
+module GoogleAppMeasurementIdentitySupportTarget {
+umbrella "/Users/kondokenji/Library/Developer/Xcode/DerivedData/MemoHero-hgimondtuhxeuihgzxbgmvzxiapl/SourcePackages/checkouts/GoogleAppMeasurement/GoogleAppMeasurementIdentitySupportWrapper/include"
+export *
+}
